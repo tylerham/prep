@@ -1,17 +1,17 @@
 ﻿namespace prep.utility.filtering
 {
-	public class NegatingMatcher<Item> : IMatchAn<Item>
-	{
-		readonly IMatchAn<Item> _innerMatcher;
+  public class NegatingMatcher<Item> : IMatchAn<Item>
+  {
+    IMatchAn<Item> inner;
 
-		public NegatingMatcher(IMatchAn<Item> innerMatcher)
-		{
-			_innerMatcher = innerMatcher;
-		}
+    public NegatingMatcher(IMatchAn<Item> inner)
+    {
+      this.inner = inner;
+    }
 
-		public bool matches(Item item)
-		{
-			return !_innerMatcher.matches(item);
-		}
-	}
+    public bool matches(Item item)
+    {
+      return ! inner.matches(item);
+    }
+  }
 }
