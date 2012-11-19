@@ -14,7 +14,10 @@ namespace prep.collections
 
     public IEnumerable<Movie> all_movies()
     {
-      return this.movies;
+        foreach (var movie in movies)
+        {
+            yield return movie;
+        }
     }
 
     public void add(Movie movie)
