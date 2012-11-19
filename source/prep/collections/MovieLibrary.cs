@@ -22,7 +22,14 @@ namespace prep.collections
 
     public void add(Movie movie)
     {
-      movies.Add(movie);
+        if (movies.Contains(movie))
+            return;
+        foreach (var storedMovie in movies)
+        {
+            if (storedMovie.title == movie.title)
+                return;
+        }
+          movies.Add(movie);
     }
 
     public IEnumerable<Movie> sort_all_movies_by_title_descending()
