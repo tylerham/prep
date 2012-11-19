@@ -72,6 +72,7 @@
     <Compile Include="utility\filtering\IMatchAnItem.cs" />
     <Compile Include="utility\filtering\MatchExtensions.cs" />
     <Compile Include="utility\filtering\ConditionalMatch.cs" />
+    <Compile Include="utility\filtering\NegatingMatcher.cs" />
     <Compile Include="utility\filtering\NeverMatches.cs" />
     <Compile Include="utility\filtering\OrMatch.cs" />
     <Compile Include="utility\filtering\PropertyAccessor.cs" />

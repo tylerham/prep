@@ -24,7 +24,7 @@ namespace prep.utility.filtering
 
     public IMatchAn<ItemToFilter> not_equal_to(TProperty value)
     {
-      throw new System.NotImplementedException();
+      return new NegatingMatcher<ItemToFilter>(equal_to(value));
     }
   }
 }
