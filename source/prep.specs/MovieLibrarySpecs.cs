@@ -247,7 +247,8 @@ namespace prep.specs
 
         var results = sut.all_movies().all_items_matching(criteria);
 
-        results.ShouldContainOnly(the_ring, shrek, theres_something_about_mary);
+
+        results.ShouldContainOnly(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean);
       };
 
 
