@@ -22,7 +22,7 @@ namespace prep.collections
 
     public void add(Movie movie)
     {
-      throw new NotImplementedException();
+      movies.Add(movie);
     }
 
     public IEnumerable<Movie> sort_all_movies_by_title_descending()
