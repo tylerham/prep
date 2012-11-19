@@ -2,16 +2,16 @@
 {
 	public class NegatingMatcher<Item> : IMatchAn<Item>
 	{
-		readonly IMatchAn<Item> _innerItem;
+		readonly IMatchAn<Item> _innerMatcher;
 
-		public NegatingMatcher(IMatchAn<Item> innerItem)
+		public NegatingMatcher(IMatchAn<Item> innerMatcher)
 		{
-			_innerItem = innerItem;
+			_innerMatcher = innerMatcher;
 		}
 
 		public bool matches(Item item)
 		{
-			return !_innerItem.matches(item);
+			return !_innerMatcher.matches(item);
 		}
 	}
 }
