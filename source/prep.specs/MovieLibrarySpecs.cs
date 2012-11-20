@@ -7,7 +7,6 @@ using developwithpassion.specifications.rhinomocks;
 using prep.collections;
 using prep.specs.utility;
 using prep.utility;
-using prep.utility.filtering;
 using prep.utility.ranges;
 
 /* The following set of Context/Specification pairs are in place to specify the functionality that you need to complete for the MovieLibrary class.
@@ -73,6 +72,7 @@ namespace prep.specs
         depends.on(movie_collection);
       };
     };
+
     public class when_iterating : movie_library_concern
     {
       static IEnumerable<Movie> result;
@@ -175,7 +175,6 @@ namespace prep.specs
       Because b = () =>
         sut.add(movie);
 
-
       It should_not_restore_the_movie_in_the_collection = () =>
         movie_collection.Count.ShouldEqual(1);
     }
@@ -217,7 +216,8 @@ namespace prep.specs
 
       It should_be_able_to_find_all_movies_published_by_pixar_or_disney = () =>
       {
-        var criteria = Where<Movie>.has_a(x => x.production_studio).equal_to_any(ProductionStudio.Pixar,ProductionStudio.Disney);
+        var criteria = Where<Movie>.has_a(x => x.production_studio)
+                                   .equal_to_any(ProductionStudio.Pixar, ProductionStudio.Disney);
 
         var results = sut.all_movies().all_items_matching(criteria);
 
@@ -236,7 +236,7 @@ namespace prep.specs
       It should_be_able_to_find_all_movies_published_after_a_certain_year = () =>
       {
         // > 2004
-        var criteria = Where<Movie>.has_an(x => x.date_published.Year).falls_in(Range<int>.starts_after(2004));
+        var criteria = Where<Movie>.has_a(x => x.date_published).greater_than(2004);
 
         var results = sut.all_movies().all_items_matching(criteria);
 
@@ -246,14 +246,13 @@ namespace prep.specs
       It should_be_able_to_find_all_movies_published_between_a_certain_range_of_years = () =>
       {
         //1982-2003 - inclusive
-          var criteria = Where<Movie>.has_an(x => x.date_published.Year).falls_in(Range<int>.starts_on(1982).ends_on(2003));
+        var criteria = Where<Movie>.has_a(x => x.date_published.Year)
+                                   .falls_in(Range<int>.starts_on(1982).ends_on(2003));
 
         var results = sut.all_movies().all_items_matching(criteria);
 
-
         results.ShouldContainOnly(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean);
       };
-
 
       It should_be_able_to_find_all_kid_movies = () =>
       {
