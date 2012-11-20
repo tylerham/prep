@@ -15,5 +15,6 @@
     {
       return specification.matches(accessor(item));
     }
+
   }
 }

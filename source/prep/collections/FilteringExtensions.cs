@@ -29,7 +29,7 @@ namespace prep.collections
 
         public static IMatchAn<ItemToFilter> create_to_match<ItemToFilter, TProperty>(this MatchCreationExtensionPoint<ItemToFilter, TProperty> extension_point, IMatchAn<TProperty> criteria)
         {
-            return new PropertyMatch<ItemToFilter, TProperty>(extension_point.accessor, criteria);
+            return new PropertyMatch<ItemToFilter, TProperty>(extension_point.accessor,extension_point.build_criteria(criteria));
         }
 
         public static IMatchAn<ItemToFilter> falls_in<ItemToFilter, TProperty>(this MatchCreationExtensionPoint<ItemToFilter, TProperty> extension_point, IContainValues<TProperty> range) where TProperty : IComparable<TProperty>
