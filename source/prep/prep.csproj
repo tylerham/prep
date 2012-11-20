@@ -60,10 +60,11 @@
     <Compile Include="collections\FilteringDateExtensions.cs" />
     <Compile Include="collections\Genre.cs" />
     <Compile Include="collections\IMatchAMovie.cs" />
+    <Compile Include="collections\IProvideAccessToFilteringDSL.cs" />
     <Compile Include="collections\MatchCreationExtensionPoint.cs" />
     <Compile Include="collections\FilteringExtensions.cs" />
-    <Compile Include="collections\NegatingFilteringExtensionPoint.cs" />
-    <Compile Include="utility\BetterEnumerableExtensions.cs" />
+    <Compile Include="utility\FilteringEnumerableExtensions.cs" />
+    <Compile Include="utility\FilteringExtensionPoint.cs" />
     <Compile Include="utility\filtering\FallsInRange.cs" />
     <Compile Include="utility\filtering\IsBetween.cs" />
     <Compile Include="utility\filtering\IsGreaterThan.cs" />

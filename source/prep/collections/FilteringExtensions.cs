@@ -1,50 +1,48 @@
 ﻿using System;
-using prep.utility;
 using prep.utility.filtering;
 using prep.utility.ranges;
 
 namespace prep.collections
 {
-    public static class FilteringExtensions
+  public static class FilteringExtensions
+  {
+    public static DSLResult equal_to<ItemToFilter, TProperty, DSLResult>(
+      this IProvideAccessToFilteringDSL<ItemToFilter, TProperty, DSLResult> dsl_point, TProperty value)
     {
-        public static IMatchAn<ItemToFilter> equal_to<ItemToFilter, TProperty>(this IProvideAccessToFilteringExtensions<ItemToFilter, TProperty> extension_point, TProperty value)
-        {
-            return equal_to_any(extension_point, value);
-        }
-
-        public static IMatchAn<ItemToFilter> equal_to_any<ItemToFilter, TProperty>(this IProvideAccessToFilteringExtensions<ItemToFilter, TProperty> extension_point, params TProperty[] values)
-        {
-            return create_to_match(extension_point, new EqualToAny<TProperty>(values));
-        }
-
-        public static IMatchAn<ItemToFilter> not_equal_to<ItemToFilter, TProperty>(this IProvideAccessToFilteringExtensions<ItemToFilter, TProperty> extension_point, TProperty value)
-        {
-            return new NegatingMatcher<ItemToFilter>(equal_to(extension_point, value));
-        }
-
-        public static IMatchAn<ItemToFilter> create_using<ItemToFilter, TProperty>(this IProvideAccessToFilteringExtensions<ItemToFilter, TProperty> extension_point, Condition<ItemToFilter> condition)
-        {
-            return new ConditionalMatch<ItemToFilter>(condition);
-        }
-
-        public static IMatchAn<ItemToFilter> create_to_match<ItemToFilter, TProperty>(this IProvideAccessToFilteringExtensions<ItemToFilter, TProperty> extension_point, IMatchAn<TProperty> criteria)
-        {
-          return extension_point.build_criteria(criteria);
-        }
-
-      public static IMatchAn<ItemToFilter> falls_in<ItemToFilter, TProperty>(this IProvideAccessToFilteringExtensions<ItemToFilter, TProperty> extension_point, IContainValues<TProperty> range) where TProperty : IComparable<TProperty>
-        {
-            return create_to_match(extension_point, new FallsInRange<TProperty>(range));
-        }
-
-        public static IMatchAn<ItemToFilter> greater_than<ItemToFilter, TProperty>(this IProvideAccessToFilteringExtensions<ItemToFilter, TProperty> extension_point, TProperty value) where TProperty : IComparable<TProperty>
-        {
-            return create_to_match(extension_point, new IsGreaterThan<TProperty>(value));
-        }
-
-        public static IMatchAn<ItemToFilter> between<ItemToFilter, TProperty>(this IProvideAccessToFilteringExtensions<ItemToFilter, TProperty> extension_point, TProperty start, TProperty end) where TProperty : IComparable<TProperty>
-        {
-            return create_to_match(extension_point, new IsBetween<TProperty>(start, end));
-        }
+      return equal_to_any(dsl_point, value);
     }
+
+    public static DSLResult equal_to_any<ItemToFilter, TProperty, DSLResult>(
+      this IProvideAccessToFilteringDSL<ItemToFilter, TProperty, DSLResult> dsl_point, params TProperty[] values)
+    {
+      return create_to_match(dsl_point, new EqualToAny<TProperty>(values));
+    }
+
+    public static DSLResult create_to_match<ItemToFilter, TProperty, DSLResult>(
+      this IProvideAccessToFilteringDSL<ItemToFilter, TProperty, DSLResult> dsl_point, IMatchAn<TProperty> criteria)
+    {
+      return dsl_point.build_dsl_result_using(criteria);
+    }
+
+    public static DSLResult falls_in<ItemToFilter, TProperty, DSLResult>(
+      this IProvideAccessToFilteringDSL<ItemToFilter, TProperty, DSLResult> dsl_point, IContainValues<TProperty> range)
+      where TProperty : IComparable<TProperty>
+    {
+      return create_to_match(dsl_point, new FallsInRange<TProperty>(range));
+    }
+
+    public static DSLResult greater_than<ItemToFilter, TProperty, DSLResult>(
+      this IProvideAccessToFilteringDSL<ItemToFilter, TProperty, DSLResult> dsl_point, TProperty value)
+      where TProperty : IComparable<TProperty>
+    {
+      return create_to_match(dsl_point, new IsGreaterThan<TProperty>(value));
+    }
+
+    public static DSLResult between<ItemToFilter, TProperty, DSLResult>(
+      this IProvideAccessToFilteringDSL<ItemToFilter, TProperty, DSLResult> dsl_point, TProperty start, TProperty end)
+      where TProperty : IComparable<TProperty>
+    {
+      return create_to_match(dsl_point, new IsBetween<TProperty>(start, end));
+    }
+  }
 }

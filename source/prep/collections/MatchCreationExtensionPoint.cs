@@ -2,13 +2,8 @@
 
 namespace prep.collections
 {
-  public interface IProvideAccessToFilteringExtensions<ItemToFilter, PropertyType>
-  {
-    IMatchAn<ItemToFilter> build_criteria(IMatchAn<PropertyType> criteria);
-  }
-
   public class MatchCreationExtensionPoint<ItemToFilter, PropertyType> :
-    IProvideAccessToFilteringExtensions<ItemToFilter, PropertyType>
+    IProvideAccessToFilteringDSL<ItemToFilter, PropertyType, IMatchAn<ItemToFilter>>
   {
     PropertyAccessor<ItemToFilter, PropertyType> accessor;
 
@@ -17,14 +12,30 @@ namespace prep.collections
       this.accessor = accessor;
     }
 
-    public IProvideAccessToFilteringExtensions<ItemToFilter, PropertyType> not
+    public IProvideAccessToFilteringDSL<ItemToFilter, PropertyType,IMatchAn<ItemToFilter>> not
     {
-      get { return new NegatingFilteringExtensionPoint<ItemToFilter,PropertyType>(this); }
+      get { return new NegatingMatchingExtensionPoint(this); }
     }
 
-    public IMatchAn<ItemToFilter> build_criteria(IMatchAn<PropertyType> criteria)
+    public IMatchAn<ItemToFilter> build_dsl_result_using(IMatchAn<PropertyType> criteria)
     {
       return new PropertyMatch<ItemToFilter, PropertyType>(accessor, criteria);
+    }
+
+    class NegatingMatchingExtensionPoint : IProvideAccessToFilteringDSL<ItemToFilter, PropertyType, IMatchAn<ItemToFilter>>
+    {
+      IProvideAccessToFilteringDSL<ItemToFilter, PropertyType, IMatchAn<ItemToFilter>> original;
+
+      public NegatingMatchingExtensionPoint(
+        IProvideAccessToFilteringDSL<ItemToFilter, PropertyType, IMatchAn<ItemToFilter>> original)
+      {
+        this.original = original;
+      }
+
+      public IMatchAn<ItemToFilter> build_dsl_result_using(IMatchAn<PropertyType> criteria)
+      {
+        return new NegatingMatcher<ItemToFilter>(original.build_dsl_result_using(criteria));
+      }
     }
   }
 }
