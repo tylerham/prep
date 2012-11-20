@@ -10,6 +10,11 @@ namespace prep.collections
   {
     ICreateMatchers<ItemToFilter, TProperty> original;
 
+    public ComparableMatchFactory(ICreateMatchers<ItemToFilter, TProperty> original)
+    {
+      this.original = original;
+    }
+
     public IMatchAn<ItemToFilter> create_using(Condition<ItemToFilter> condition)
     {
       return original.create_using(condition);
@@ -28,11 +33,6 @@ namespace prep.collections
     public IMatchAn<ItemToFilter> not_equal_to(TProperty value)
     {
       return original.not_equal_to(value);
-    }
-
-    public ComparableMatchFactory(ICreateMatchers<ItemToFilter, TProperty> original)
-    {
-      this.original = original;
     }
 
     public IMatchAn<ItemToFilter> falls_in(IContainValues<TProperty> range)

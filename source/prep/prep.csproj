@@ -84,7 +84,15 @@
     <Compile Include="utility\filtering\PropertyAccessor.cs" />
     <Compile Include="utility\filtering\MatchFactory.cs" />
     <Compile Include="utility\filtering\PropertyMatch.cs" />
+    <Compile Include="utility\ranges\IsBelow.cs" />
     <Compile Include="utility\ranges\IContainValues.cs" />
+    <Compile Include="utility\ranges\IEndRanges.cs" />
+    <Compile Include="utility\ranges\IsAbove.cs" />
+    <Compile Include="utility\ranges\IStartRanges.cs" />
+    <Compile Include="utility\ranges\Range.cs" />
+    <Compile Include="utility\ranges\RangeBoundary.cs" />
+    <Compile Include="utility\ranges\RangeBoundaryCondition.cs" />
+    <Compile Include="utility\ranges\RangeBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
