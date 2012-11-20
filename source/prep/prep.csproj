@@ -85,6 +85,7 @@
     <Compile Include="utility\filtering\MatchFactory.cs" />
     <Compile Include="utility\filtering\PropertyMatch.cs" />
     <Compile Include="utility\ranges\IContainValues.cs" />
+    <Compile Include="utility\ranges\Range.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
