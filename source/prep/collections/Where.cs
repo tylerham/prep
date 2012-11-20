@@ -1,20 +1,13 @@
-﻿using System;
-using prep.utility.filtering;
+﻿using prep.utility.filtering;
 
 namespace prep.collections
 {
-    public static class Where<ItemToFilter>
+  public class Where<ItemToFilter>
+  {
+    public static MatchCreationExtensionPoint<ItemToFilter, TProperty> has_a<TProperty>(
+      PropertyAccessor<ItemToFilter, TProperty> accessor)
     {
-        public static MatchFactory<ItemToFilter, TProperty> has_a<TProperty>(
-            PropertyAccessor<ItemToFilter, TProperty> accessor)
-        {
-            return new MatchFactory<ItemToFilter, TProperty>(accessor);
-        }
-
-        public static ComparableMatchFactory<ItemToFilter, TProperty> has_an<TProperty>(
-            PropertyAccessor<ItemToFilter, TProperty> accessor) where TProperty : IComparable<TProperty>
-        {
-            return new ComparableMatchFactory<ItemToFilter, TProperty>(has_a(accessor));
-        }
+      return new MatchCreationExtensionPoint<ItemToFilter, TProperty>(accessor);
     }
+  }
 }

@@ -3,18 +3,18 @@ using prep.utility.ranges;
 
 namespace prep.utility.filtering
 {
-  public class FallsInRange<T> : IMatchAn<T> where T : IComparable<T>
-  {
-    IContainValues<T> range;
-
-    public FallsInRange(IContainValues<T> range)
+    public class FallsInRange<T> : IMatchAn<T> where T : IComparable<T>
     {
-      this.range = range;
-    }
+        private readonly IContainValues<T> _range;
 
-    public bool matches(T item)
-    {
-      return range.contains(item);
+        public FallsInRange(IContainValues<T> range)
+        {
+            this._range = range;
+        }
+
+        public bool matches(T item)
+        {
+            return _range.contains(item);
+        }
     }
-  }
 }
