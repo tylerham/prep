@@ -21,28 +21,43 @@ namespace prep.utility.ranges
 
         public IContainValues<T> ends_on(T endsOn)
         {
+            VerifyEndBoundary(endsOn);
+
             _end = new RangeBoundary<T>(endsOn, RangeBoundaryCondition.Inclusive);
             return this;
         }
 
+        private void VerifyEndBoundary(T endValue)
+        {
+            if (_start.Condition != RangeBoundaryCondition.Unchecked && (endValue.CompareTo(_start.Value) < 0))
+                throw new InvalidOperationException("End cannot be less than start");
+        }
+
         public IContainValues<T> ends_before(T endsBefore)
         {
+            VerifyEndBoundary(endsBefore);
+
             _end = new RangeBoundary<T>(endsBefore, RangeBoundaryCondition.Exclusive);
             return this;
         }
 
         public bool contains(T item)
         {
-            return is_above_start(item) && is_below_end(item);
+            return is_within_start_bound(item) && is_within_end_bound(item);
         }
 
-        private bool is_above_start(T item)
+        public bool does_not_contain(T item)
+        {
+            return !contains(item);
+        }
+
+        private bool is_within_start_bound(T item)
         {
             var spec = new RangeBoundaryMatcher<T>(_start, RangeBoundaryType.Low);
             return spec.matches(item);
         }
 
-        private bool is_below_end(T item)
+        private bool is_within_end_bound(T item)
         {
             var spec = new RangeBoundaryMatcher<T>(_end, RangeBoundaryType.High);
             return spec.matches(item);
