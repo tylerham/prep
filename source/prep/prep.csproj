@@ -62,6 +62,7 @@
     <Compile Include="collections\IMatchAMovie.cs" />
     <Compile Include="collections\MatchCreationExtensionPoint.cs" />
     <Compile Include="collections\FilteringExtensions.cs" />
+    <Compile Include="collections\NegatingFilteringExtensionPoint.cs" />
     <Compile Include="utility\filtering\FallsInRange.cs" />
     <Compile Include="utility\filtering\IsBetween.cs" />
     <Compile Include="utility\filtering\IsGreaterThan.cs" />
