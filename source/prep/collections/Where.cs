@@ -14,8 +14,7 @@ namespace prep.collections
     public static ComparableMatchFactory<ItemToFilter, TProperty> has_an<TProperty>(
       PropertyAccessor<ItemToFilter, TProperty> accessor) where TProperty : IComparable<TProperty>
     {
-      return new ComparableMatchFactory<ItemToFilter, TProperty>(accessor,
-        has_a(accessor));
+      return new ComparableMatchFactory<ItemToFilter, TProperty>(has_a(accessor));
     }
   }
 }
