@@ -47,22 +47,4 @@ namespace prep.collections
             return create_to_match(extension_point, new IsBetween<TProperty>(start, end));
         }
     }
-
-
-    public static class FilteringDateExtensions
-    {
-
-
-        public static IMatchAn<ItemToFilter> greater_than<ItemToFilter>(this MatchCreationExtensionPoint<ItemToFilter, DateTime> extension_point, int year, int month =1, int day =1)
-        {
-            return extension_point.greater_than(new DateTime(year, month, day));
-        }
-
-        public static IMatchAn<ItemToFilter> greater_than<ItemToFilter>(this MatchCreationExtensionPoint<ItemToFilter, DateTime> extension_point, DateTime date)
-        {
-            return extension_point.create_to_match(new IsGreaterThan<DateTime>(date));
-        }
-
-
-    }
 }
