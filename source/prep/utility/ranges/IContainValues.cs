@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using prep.utility.filtering;
 
 namespace prep.utility.ranges
@@ -9,39 +8,29 @@ namespace prep.utility.ranges
     bool contains(T item);
   }
 
-    public class ContainValues<TProperty> : IContainValues<TProperty> where TProperty : IComparable<TProperty>
+  public class ContainValues<TProperty> : IContainValues<TProperty> where TProperty : IComparable<TProperty>
+  {
+    IMatchAn<TProperty> condition;
+
+    public ContainValues(IMatchAn<TProperty> condition)
     {
-        private readonly List<Condition<TProperty>> _conditions=new List<Condition<TProperty>>();
-
-        public bool contains(TProperty item)
-        {
-            foreach (var condition in _conditions)
-            {
-                if (!condition(item)) return false;
-            }
-            return true;
-        }
-
-        public void AddCondition(Condition<TProperty> condition)
-        {
-            _conditions.Add(condition);
-        }
-
-        //public IRangeConfig<TProperty> From(TProperty start)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public ContainValues<TProperty> To(TProperty end)
-        {
-            AddCondition(new IsEqualOrLesserThan<TProperty>(end).matches);
-            return this;
-        }
+      this.condition = condition;
     }
 
-    //public interface IRangeConfig<T>
-    //{
-    //    IRangeConfig<T> From(T start);
-    //    IRangeConfig<T> To(T end);
-    //}
+    public bool contains(TProperty item)
+    {
+      return condition.matches(item);
+    }
+
+    public ContainValues<TProperty> add_condition(IMatchAn<TProperty> condition)
+    {
+      return new ContainValues<TProperty>(this.condition.and(condition));
+    }
+
+    public ContainValues<TProperty> to(TProperty end)
+    {
+      return add_condition(new IsEqualOrLesserThan<TProperty>(end));
+    }
+  }
+
 }

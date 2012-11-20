@@ -246,7 +246,7 @@ namespace prep.specs
       It should_be_able_to_find_all_movies_published_between_a_certain_range_of_years = () =>
       {
         //1982-2003 - inclusive
-          var criteria = Where<Movie>.has_an(x => x.date_published.Year).falls_in(Range.StartingFrom(1982).To(2003));
+          var criteria = Where<Movie>.has_an(x => x.date_published.Year).falls_in(Range.starting_from(1982).to(2003));
 
         var results = sut.all_movies().all_items_matching(criteria);
 
