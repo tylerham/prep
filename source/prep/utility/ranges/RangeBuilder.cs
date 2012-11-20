@@ -27,7 +27,7 @@ namespace prep.utility.ranges
 
         public IContainValues<T> ends_before(T endsBefore)
         {
-            _end =new RangeBoundary<T>(endsBefore, RangeBoundaryCondition.Exclusive);
+            _end = new RangeBoundary<T>(endsBefore, RangeBoundaryCondition.Exclusive);
             return this;
         }
 
@@ -38,13 +38,13 @@ namespace prep.utility.ranges
 
         private bool is_above_start(T item)
         {
-            var spec = new IsAbove<T>(_start);
+            var spec = new RangeBoundaryMatcher<T>(_start, RangeBoundaryType.Low);
             return spec.matches(item);
         }
 
         private bool is_below_end(T item)
         {
-            var spec = new IsBelow<T>(_end);
+            var spec = new RangeBoundaryMatcher<T>(_end, RangeBoundaryType.High);
             return spec.matches(item);
         }
     }
