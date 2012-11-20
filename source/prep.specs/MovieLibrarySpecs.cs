@@ -8,6 +8,7 @@ using prep.collections;
 using prep.specs.utility;
 using prep.utility;
 using prep.utility.filtering;
+using prep.utility.ranges;
 
 /* The following set of Context/Specification pairs are in place to specify the functionality that you need to complete for the MovieLibrary class.
  * MovieLibrary is an collection of Movie. It exposes the ability to search,sort, and iterate over all of the movies that it contains.
@@ -235,7 +236,7 @@ namespace prep.specs
       It should_be_able_to_find_all_movies_published_after_a_certain_year = () =>
       {
         // > 2004
-        var criteria = Where<Movie>.has_an(x => x.date_published.Year).greater_than(2004);
+        var criteria = Where<Movie>.has_an(x => x.date_published.Year).falls_in(Range.After(2004));
 
         var results = sut.all_movies().all_items_matching(criteria);
 
@@ -245,7 +246,7 @@ namespace prep.specs
       It should_be_able_to_find_all_movies_published_between_a_certain_range_of_years = () =>
       {
         //1982-2003 - inclusive
-        var criteria = Where<Movie>.has_an(x => x.date_published.Year).between(1982, 2003);
+          var criteria = Where<Movie>.has_an(x => x.date_published.Year).falls_in(Range.starting_from(1982).to(2003));
 
         var results = sut.all_movies().all_items_matching(criteria);
 

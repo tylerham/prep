@@ -60,6 +60,11 @@
     <Compile Include="collections\ComparableMatchFactory.cs" />
     <Compile Include="collections\Genre.cs" />
     <Compile Include="collections\IMatchAMovie.cs" />
+    <Compile Include="utility\filtering\AndMatch.cs" />
+    <Compile Include="utility\filtering\IsEqualOrGreaterThan.cs" />
+    <Compile Include="utility\filtering\IsEqualOrLesserThan.cs" />
+    <Compile Include="utility\filtering\IsLesserThan.cs" />
+    <Compile Include="utility\ranges\Range.cs" />
     <Compile Include="utility\filtering\FallsInRange.cs" />
     <Compile Include="utility\filtering\IsBetween.cs" />
     <Compile Include="utility\filtering\IsGreaterThan.cs" />
