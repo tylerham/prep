@@ -235,7 +235,7 @@ namespace prep.specs
       {
 
         // > 2004
-        var criteria = Where<Movie>.has_a(x => x.date_published).not.greater_than(2004);
+        var criteria = Where<Movie>.has_a(x => x.date_published).greater_than(2004);
 
         var results = sut.all_movies().all_items_matching(criteria);
 
@@ -251,6 +251,7 @@ namespace prep.specs
 
         results.ShouldContainOnly(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean);
       };
+
 
       It should_be_able_to_find_all_kid_movies = () =>
       {
