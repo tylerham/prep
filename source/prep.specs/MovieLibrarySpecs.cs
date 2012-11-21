@@ -57,15 +57,52 @@ using prep.specs.utility;
 
 namespace prep.specs
 {
+    [Subject(typeof(FileEvent))]
     public class FileEventSpecs
     {
-        public class when_adding_a_file
+        public class file_event_concern
+        {
+            protected static FileEvent sut;
+            protected static string result;
+            Establish context = () => sut = new FileEvent();
+        }
+        public class when_adding_a_dir : file_event_concern
         {
             Because b = () =>
-                sut.parse("");
+                result = sut.parse("ADD 1282352346 /test -");
+
+            It should_contain_dir = () => result.ShouldContain("dir");
+            Behaves_like<an_add> added;
+        }
+        public class when_adding_a_file : file_event_concern
+        {
+            Because b = () =>
+                result = sut.parse("ADD 1282353016 /test/1.txt f2fa762f");
+
+            It should_contain_file = () => result.ShouldContain("file");
+            Behaves_like<an_add> added;
+        }
+        [Behaviors]
+        public class an_add : file_event_concern
+        {
+            It should_contain_add = () => result.ShouldContain("Add");
         }
     }
-//  [Subject(typeof(MovieLibrary))]
+
+    public class FileEvent
+    {
+        public string parse(string line)
+        {
+            if(line.Contains("-"))
+              return "Add dir";
+            else
+            {
+                return "Add file";
+            }
+        }
+    }
+
+    //  [Subject(typeof(MovieLibrary))]
 //  public class MovieLibrarySpecs
 //  {
 //    public abstract class movie_library_concern : Observes<MovieLibrary>
