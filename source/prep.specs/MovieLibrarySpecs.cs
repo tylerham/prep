@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Machine.Specifications;
 using developwithpassion.specifications.extensions;
 using developwithpassion.specifications.rhinomocks;
@@ -60,20 +61,23 @@ namespace prep.specs
   [Subject(typeof(FileEvent))]
   public class FileEventSpecs
   {
-    public class file_event_concern
+    public class file_event_concern : Observes<FileEvent>
     {
-      protected static FileEvent sut;
+      Establish c = () => input_lines = string.Format("");
+      It should_contain_the_file_name = () => {  };
       protected static string result;
-      Establish context = () => sut = new FileEvent();
+      protected static string file_name;
+      protected static string input_lines;
     }
 
     public class when_adding_a_dir : file_event_concern
     {
+      Establish c = () => file_name = "/test";
       Because b = () =>
         result = sut.parse("ADD 1282352346 /test -");
 
-      It should_contain_dir = () => result.ShouldContain("dir");
       Behaves_like<an_add> added;
+      Behaves_like<a_directory_operation> a_directory_operation;
     }
 
     public class when_adding_a_file : file_event_concern
@@ -81,14 +85,47 @@ namespace prep.specs
       Because b = () =>
         result = sut.parse("ADD 1282353016 /test/1.txt f2fa762f");
 
-      It should_contain_file = () => result.ShouldContain("file");
       Behaves_like<an_add> added;
+      Behaves_like<a_file_operation> a_file_operation;
+    }
+
+    public class when_deleting_a_dir : file_event_concern
+    {
+      Because b = () =>
+        result = sut.parse("DEL 1282352347 /blah -");
+
+      Behaves_like<a_delete> deleted;
+      Behaves_like<a_directory_operation> a_directory_operation;
+    }
+
+    public class when_deleting_a_file : file_event_concern
+    {
+      Because b = () =>
+        result = sut.parse("DEL 1282352348 /blah/4.txt abcdef12");
+
+      Behaves_like<a_delete> deleted;
+      Behaves_like<a_file_operation> a_file_operation;
     }
 
     [Behaviors]
     public class an_add : file_event_concern
     {
-      It should_contain_add = () => result.ShouldContain("Add");
+      It should_contain_add = () => result.ShouldContain("Added");
+    }
+    [Behaviors]
+    public class a_delete : file_event_concern
+    {
+      It should_contain_add = () => result.ShouldContain("Deleted");
+    }
+    [Behaviors]
+    public class a_file_operation : file_event_concern
+    {
+      It should_contain_add = () => result.ShouldContain("file");
+    }
+    [Behaviors]
+    public class a_directory_operation : file_event_concern
+    {
+      It should_contain_add = () => result.ShouldContain("dir");
     }
   }
 
@@ -96,12 +133,22 @@ namespace prep.specs
   {
     public string parse(string line)
     {
-      if (line.Contains("-"))
-        return "Add dir";
+      var output = new StringBuilder();
+      if (line.StartsWith("ADD"))
+      {
+        output.Append("Added ");
+      }else if (line.StartsWith("DEL"))
+      {
+        output.Append("Deleted ");
+      }
+      if (line.EndsWith("-"))
+        output.Append("directory ");
       else
       {
-        return "Add file";
+        output.Append("file ");
       }
+      
+      return output.ToString();
     }
   }
 
